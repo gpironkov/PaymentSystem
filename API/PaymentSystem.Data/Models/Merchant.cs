@@ -7,10 +7,13 @@ namespace API.PaymentSystem.Data.Models
     {
         public Merchant()
         {
-            //this.Id = id;
-            this.CreatedOn = DateTime.UtcNow;
             this.Status = MerchantStatus.Active;
-        }
+            this.CreatedOn = DateTime.UtcNow;
+        }        
+
+        public virtual User User { get; set; }
+
+        public int UserId { get; set; }
 
         public string Name { get; set; }
 
@@ -22,6 +25,6 @@ namespace API.PaymentSystem.Data.Models
 
         public decimal TotalTransactionSum { get; set; }
 
-        public List<Transaction> Transactions { get; set; } = new List<Transaction>();
+        public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }

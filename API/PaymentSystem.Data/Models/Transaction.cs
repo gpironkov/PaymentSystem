@@ -5,16 +5,16 @@ namespace API.PaymentSystem.Data.Models
 {
     public class Transaction : BaseModel
     {
-        public Transaction() //: base()
+        public Transaction()
         {
             //this.Id = id;
             this.CreatedOn = DateTime.UtcNow;
             this.Status = TransactionStatus.Error;
-        }
-
-        public Guid MerchantId { get; set; }
+        }        
 
         public virtual Merchant Merchant { get; set; }
+
+        public int MerchantId { get; set; }
 
         public Guid GUID { get; set; }
 

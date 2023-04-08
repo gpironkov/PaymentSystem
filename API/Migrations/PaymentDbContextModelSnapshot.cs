@@ -51,7 +51,13 @@ namespace API.Migrations
                     b.Property<decimal>("TotalTransactionSum")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Merchants");
                 });
@@ -79,10 +85,7 @@ namespace API.Migrations
                     b.Property<Guid>("GUID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("MerchantId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int?>("MerchantId1")
+                    b.Property<int>("MerchantId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("ModifiedOn")
@@ -93,7 +96,7 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MerchantId1");
+                    b.HasIndex("MerchantId");
 
                     b.ToTable("Transactions");
                 });
@@ -126,11 +129,22 @@ namespace API.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("API.PaymentSystem.Data.Models.Merchant", b =>
+                {
+                    b.HasOne("API.PaymentSystem.Data.Models.User", "User")
+                        .WithOne("Merchant")
+                        .HasForeignKey("API.PaymentSystem.Data.Models.Merchant", "UserId");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("API.PaymentSystem.Data.Models.Transaction", b =>
                 {
                     b.HasOne("API.PaymentSystem.Data.Models.Merchant", "Merchant")
                         .WithMany("Transactions")
-                        .HasForeignKey("MerchantId1");
+                        .HasForeignKey("MerchantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Merchant");
                 });
@@ -138,6 +152,11 @@ namespace API.Migrations
             modelBuilder.Entity("API.PaymentSystem.Data.Models.Merchant", b =>
                 {
                     b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("API.PaymentSystem.Data.Models.User", b =>
+                {
+                    b.Navigation("Merchant");
                 });
 #pragma warning restore 612, 618
         }

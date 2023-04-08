@@ -15,5 +15,7 @@ namespace API.PaymentSystem.Data.Models
         public string PasswordHash { get; set; }
          
         public UserRoles Role { get; set; }
+
+        public virtual Merchant Merchant { get; set; }
     }
 }
