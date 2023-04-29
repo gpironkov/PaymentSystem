@@ -1,6 +1,4 @@
 ﻿using API.PaymentSystem.Data.Models;
-using API.PaymentSystem.DTOs.Csv;
-using System.Collections;
 
 namespace API.PaymentSystem.Repository.Interfaces
 {
